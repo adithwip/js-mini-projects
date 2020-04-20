@@ -25,29 +25,33 @@ function immediateLoadEventListeners() {
 function addTodo(e) {
   e.preventDefault();
 
-  // Membuat element li
-  const li = document.createElement("li");
-  // Tambahkan class pada element li
-  li.className =
-    "list-group-item d-flex justify-content-between align-items-center mb-1";
-  // Memasukkan child ke dalam element li
-  li.appendChild(document.createTextNode(todoInput.value));
+  if (todoInput.value) {
+    // Membuat element li
+    const li = document.createElement("li");
+    // Tambahkan class pada element li
+    li.className =
+      "list-group-item d-flex justify-content-between align-items-center mb-1";
+    // Memasukkan child ke dalam element li
+    li.appendChild(document.createTextNode(todoInput.value));
 
-  // Membuat delete button
-  const link = document.createElement("a");
-  // Menambahkan class ke delete button
-  link.className = "badge badge-danger delete-todo";
-  link.href = "#";
-  link.innerHTML = "Delete";
+    // Membuat delete button
+    const link = document.createElement("a");
+    // Menambahkan class ke delete button
+    link.className = "badge badge-danger delete-todo";
+    link.href = "#";
+    link.innerHTML = "Delete";
 
-  // Masukkan delete button ke dalam li
-  li.appendChild(link);
+    // Masukkan delete button ke dalam li
+    li.appendChild(link);
 
-  // Masukkan todo/li ke dalam todoList
-  todoList.appendChild(li);
+    // Masukkan todo/li ke dalam todoList
+    todoList.appendChild(li);
 
-  // Kosongkan taskInput setelah submit
-  todoInput.value = "";
+    // Kosongkan taskInput setelah submit
+    todoInput.value = "";
+  } else {
+    alert("Write a todo first!");
+  }
 }
 
 function deleteTodo(e) {
@@ -56,6 +60,8 @@ function deleteTodo(e) {
   console.log(e.target.classList.contains("delete-todo"));
 
   if (e.target.classList.contains("delete-todo")) {
-    e.target.parentElement.remove();
+    if (confirm("Apakah yaking akan menghapus?")) {
+      e.target.parentElement.remove();
+    }
   }
 }
