@@ -44,7 +44,7 @@
               <label for="task">Todo input</label>
               <input
                 type="text"
-                id="task-input"
+                id="todo-input"
                 class="form-control form-control-lg"
                 name="task"
               />
@@ -72,18 +72,19 @@
           </div>
 
           <ul class="list-group" id="todo-list">
+            <!-- Will be recreated via JS -->
             <li
               class="list-group-item d-flex justify-content-between align-items-center mb-1"
             >
               Value dari task input
               <a href="#" class="badge badge-danger">Delete</a>
             </li>
-            <li
+            <!-- <li
               class="list-group-item d-flex justify-content-between align-items-center mb-1"
             >
               Value dari task input
               <a href="#" class="badge badge-danger">Delete</a>
-            </li>
+            </li> -->
           </ul>
         </div>
 
@@ -131,5 +132,8 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Masukkan script app.js kita ke dalam HTML -->
+    <script src="app.js"></script>
   </body>
 </html>

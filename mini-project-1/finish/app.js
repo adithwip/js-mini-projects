@@ -1,7 +1,48 @@
 // Kumpulkan semua UI
 
-const form = document.querySelector("#todo-form");
-const taskInput = document.querySelector("#task-input");
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
 const filterInput = document.querySelector("#filter-input");
 const todoList = document.querySelector("#todo-list");
 const clearTodos = document.querySelector("#clear-todos");
+
+/*
+Kita akan membuat berbagai eventListner
+yang akan kita koneksikan dengan DOM
+*/
+
+// Load begitu file JS ini dirun
+immediateLoadEventListeners();
+
+function immediateLoadEventListeners() {
+  // Add todo event
+  todoForm.addEventListener("submit", addTodo);
+}
+
+function addTodo(e) {
+  e.preventDefault();
+
+  // Membuat element li
+  const li = document.createElement("li");
+  // Tambahkan class pada element li
+  li.className =
+    "list-group-item d-flex justify-content-between align-items-center mb-1";
+  // Memasukkan child ke dalam element li
+  li.appendChild(document.createTextNode(todoInput.value));
+
+  // Membuat delete button
+  const link = document.createElement("a");
+  // Menambahkan class ke delete button
+  link.className = "badge badge-danger";
+  link.href = "#";
+  link.innerHTML = "Delete";
+
+  // Masukkan delete button ke dalam li
+  li.appendChild(link);
+
+  // Masukkan todo/li ke dalam todoList
+  todoList.appendChild(li);
+
+  // Kosongkan taskInput setelah submit
+  todoInput.value = "";
+}
