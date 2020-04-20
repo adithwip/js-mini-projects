@@ -39,12 +39,12 @@
         </h5>
 
         <div class="card-body text-white">
-          <form id="task-form">
+          <form id="todo-form">
             <div class="form-group">
               <label for="task">Todo input</label>
               <input
                 type="text"
-                id="task"
+                id="task-input"
                 class="form-control form-control-lg"
                 name="task"
               />
@@ -65,13 +65,13 @@
             <input
               type="text"
               class="form-control"
-              id="filter"
+              id="filter-input"
               aria-label="Task Filter"
               aria-describedby="task-filter"
             />
           </div>
 
-          <ul class="list-group">
+          <ul class="list-group" id="todo-list">
             <li
               class="list-group-item d-flex justify-content-between align-items-center mb-1"
             >
@@ -100,7 +100,10 @@
           </button>
 
           <div class="collapse" id="collapseClearButton">
-            <button class="btn btn-danger btn-lg btn-block clear-todos mt-3">
+            <button
+              class="btn btn-danger btn-lg btn-block clear-todos mt-3"
+              id="clear-todos"
+            >
               Clear Todo List for Real
             </button>
           </div>
