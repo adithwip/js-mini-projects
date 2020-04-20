@@ -15,6 +15,9 @@ yang akan kita koneksikan dengan DOM
 immediateLoadEventListeners();
 
 function immediateLoadEventListeners() {
+  // Get todos from localStorage and render
+  document.addEventListener("DOMContentLoaded", getTodos);
+
   // Add todo event
   todoForm.addEventListener("submit", addTodo);
 
@@ -28,32 +31,67 @@ function immediateLoadEventListeners() {
   filterInput.addEventListener("keyup", filterTodos);
 }
 
+// --- Reusable codes
+
+function getItemFromLocalStorage() {
+  let todos;
+
+  if (localStorage.getItem("todos") == null) {
+    todos = [];
+  } else {
+    todos = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  return todos;
+}
+
+function setItemToLocalStorage(item) {
+  localStorage.setItem("todos", JSON.stringify(item));
+}
+
+function createTodoElement(value) {
+  // Membuat element li
+  const li = document.createElement("li");
+  // Tambahkan class pada element li
+  li.className =
+    "list-group-item d-flex justify-content-between align-items-center mb-1 todo-item";
+  // Tambahkan id pada element li
+  li.id = "todo-item";
+  // Memasukkan child ke dalam element li
+  li.appendChild(document.createTextNode(value));
+
+  // Membuat delete button
+  const link = document.createElement("a");
+  // Menambahkan class ke delete button
+  link.className = "badge badge-danger delete-todo";
+  link.href = "#";
+  link.innerHTML = "Delete";
+
+  // Masukkan delete button ke dalam li
+  li.appendChild(link);
+
+  // Masukkan todo/li ke dalam todoList
+  todoList.appendChild(li);
+}
+
+// Load data todos dan langsung trigger pembuatan element todo
+function getTodos() {
+  let todos = getItemFromLocalStorage();
+
+  todos.forEach((todo) => {
+    createTodoElement(todo);
+  });
+}
+
+// --- DOM functions ⛔️
 function addTodo(e) {
   e.preventDefault();
 
   if (todoInput.value) {
-    // Membuat element li
-    const li = document.createElement("li");
-    // Tambahkan class pada element li
-    li.className =
-      "list-group-item d-flex justify-content-between align-items-center mb-1 todo-item";
-    // Tambahkan id pada element li
-    li.id = "todo-item";
-    // Memasukkan child ke dalam element li
-    li.appendChild(document.createTextNode(todoInput.value));
+    createTodoElement(todoInput.value);
 
-    // Membuat delete button
-    const link = document.createElement("a");
-    // Menambahkan class ke delete button
-    link.className = "badge badge-danger delete-todo";
-    link.href = "#";
-    link.innerHTML = "Delete";
-
-    // Masukkan delete button ke dalam li
-    li.appendChild(link);
-
-    // Masukkan todo/li ke dalam todoList
-    todoList.appendChild(li);
+    // Tambahkan juga value ke dalam LocalStorage
+    addTodoLocalStorage(todoInput.value);
 
     // Kosongkan taskInput setelah submit
     todoInput.value = "";
@@ -62,25 +100,52 @@ function addTodo(e) {
   }
 }
 
+function addTodoLocalStorage(todoInputValue) {
+  let todos = getItemFromLocalStorage();
+
+  todos.push(todoInputValue);
+
+  setItemToLocalStorage(todos);
+}
+
 function deleteTodo(e) {
   e.preventDefault();
   // Console logging event delegation
-  console.log(e.target.classList.contains("delete-todo"));
 
   if (e.target.classList.contains("delete-todo")) {
     if (confirm("Apakah yaking akan menghapus?")) {
-      e.target.parentElement.remove();
+      const parent = e.target.parentElement;
+      parent.remove();
+
+      deleteTodoLocalStorage(parent);
     }
   }
 }
 
+function deleteTodoLocalStorage(deleteTodoValue) {
+  let todos = getItemFromLocalStorage();
+
+  todos.forEach((todo, idx) => {
+    if (deleteTodoValue.firstChild.textContent === todo) {
+      todos.splice(idx, 1);
+    }
+  });
+
+  setItemToLocalStorage(todos);
+}
+
 function clearTodos() {
-  // console.log(todoList.childNodes);
   todoList.innerHTML = "";
 
   // while (todoList.firstChild) {
   //   todoList.removeChild(todoList.firstChild);
   // }
+
+  clearTodosLocalStorage();
+}
+
+function clearTodosLocalStorage() {
+  localStorage.clear();
 }
 
 function filterTodos(e) {
@@ -97,3 +162,4 @@ function filterTodos(e) {
     }
   });
 }
+// --- DOM functions ⛔️
