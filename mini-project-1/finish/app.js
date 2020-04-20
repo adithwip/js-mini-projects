@@ -17,6 +17,9 @@ immediateLoadEventListeners();
 function immediateLoadEventListeners() {
   // Add todo event
   todoForm.addEventListener("submit", addTodo);
+
+  // Delete todo event
+  todoList.addEventListener("click", deleteTodo);
 }
 
 function addTodo(e) {
@@ -33,7 +36,7 @@ function addTodo(e) {
   // Membuat delete button
   const link = document.createElement("a");
   // Menambahkan class ke delete button
-  link.className = "badge badge-danger";
+  link.className = "badge badge-danger delete-todo";
   link.href = "#";
   link.innerHTML = "Delete";
 
@@ -45,4 +48,14 @@ function addTodo(e) {
 
   // Kosongkan taskInput setelah submit
   todoInput.value = "";
+}
+
+function deleteTodo(e) {
+  e.preventDefault();
+  // Console logging event delegation
+  console.log(e.target.classList.contains("delete-todo"));
+
+  if (e.target.classList.contains("delete-todo")) {
+    e.target.parentElement.remove();
+  }
 }
