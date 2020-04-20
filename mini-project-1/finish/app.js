@@ -4,7 +4,7 @@ const todoForm = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo-input");
 const filterInput = document.querySelector("#filter-input");
 const todoList = document.querySelector("#todo-list");
-const clearTodos = document.querySelector("#clear-todos");
+const clearButton = document.querySelector("#clear-todos");
 
 /*
 Kita akan membuat berbagai eventListner
@@ -20,6 +20,9 @@ function immediateLoadEventListeners() {
 
   // Delete todo event
   todoList.addEventListener("click", deleteTodo);
+
+  // Clear todo list
+  clearButton.addEventListener("click", clearTodos);
 }
 
 function addTodo(e) {
@@ -64,4 +67,13 @@ function deleteTodo(e) {
       e.target.parentElement.remove();
     }
   }
+}
+
+function clearTodos() {
+  // console.log(todoList.childNodes);
+  todoList.innerHTML = "";
+
+  // while (todoList.firstChild) {
+  //   todoList.removeChild(todoList.firstChild);
+  // }
 }
