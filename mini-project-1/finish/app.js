@@ -67,12 +67,23 @@ function createTodoElement(value) {
   link.href = "#";
   link.innerHTML = "Delete";
 
+  // link of the complete button
+  const link2 = document.createElement("a");
+  link2.className = "badge badge-danger complete-todo";
+  link2.href = "#";
+  link2.innerHTML = "complete";
+
+  // some style and functionality for complete button 😍
+  link2.style.marginRight = "-75%";
+
   // Masukkan delete button ke dalam li
+  li.appendChild(link2);
   li.appendChild(link);
 
   // Masukkan todo/li ke dalam todoList
   todoList.appendChild(li);
 }
+
 
 // Load data todos dan langsung trigger pembuatan element todo
 function getTodos() {
@@ -111,6 +122,11 @@ function addTodoLocalStorage(todoInputValue) {
 function deleteTodo(e) {
   e.preventDefault();
   // Console logging event delegation
+  // for complete button
+  if (e.target.classList.contains("complete-todo")) {
+    const parent = e.target.parentElement;
+    parent.innerHTML = `<span style="text-decoration : line-through">${parent.firstChild.textContent}</span><a class="badge badge-danger complete-todo" href="#" style="margin-right: -75%;">complete</a><a class="badge badge-danger delete-todo" href="#">Delete</a>`;
+  }
 
   if (e.target.classList.contains("delete-todo")) {
     if (confirm("Apakah yaking akan menghapus?")) {
